@@ -12,8 +12,8 @@ using VietSacBackend._3.Repository.Data;
 namespace VietSacBackend.Migrations
 {
     [DbContext(typeof(VietSacContext))]
-    [Migration("20240604192626_init")]
-    partial class init
+    [Migration("20240605042530_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -189,10 +189,6 @@ namespace VietSacBackend.Migrations
 
                     b.Property<decimal?>("quantity")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("supplier_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

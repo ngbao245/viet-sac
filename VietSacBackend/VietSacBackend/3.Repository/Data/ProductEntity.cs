@@ -6,8 +6,6 @@ namespace VietSacBackend._3.Repository.Data
     {
         public string category_id { get; set; }
 
-        public string supplier_id { get; set; }
-
         public string? image { get; set; }
 
         public string? name { get; set; }

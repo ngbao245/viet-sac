@@ -1,6 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using VietSacBackend._2.Service.Interface;
+using VietSacBackend._2.Service;
 using VietSacBackend._3.Repository.Data;
+using VietSacBackend._3.Repository.BaseRepository;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using VietSacBackend._4.Core.Helper;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +57,30 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
+// Repository
+builder.Services.AddScoped<IGenericRepository<RoleEntity>, GenericRepository<RoleEntity>>();
+builder.Services.AddScoped<IGenericRepository<UserEntity>, GenericRepository<UserEntity>>();
+builder.Services.AddScoped<IGenericRepository<UserRefreshToken>, GenericRepository<UserRefreshToken>>();
+
+//Service
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+//Auth
+builder.Services.AddScoped<GenerateToken>();
+
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API Name", Version = "v1" });
+
+//    // Set the comments path for the Swagger JSON and UI.
+//    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+//    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+//    c.IncludeXmlComments(xmlPath);
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

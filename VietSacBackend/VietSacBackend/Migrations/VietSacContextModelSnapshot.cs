@@ -188,10 +188,6 @@ namespace VietSacBackend.Migrations
                     b.Property<decimal?>("quantity")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("supplier_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("category_id");
