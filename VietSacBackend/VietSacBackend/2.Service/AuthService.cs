@@ -41,6 +41,7 @@ namespace VietSacBackend._2.Service
                 Data = Token,
                 StatusCode = 200,
             };
+
         }
 
         public ResponseModel SignUp(SignUpModel signUpModel)

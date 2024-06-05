@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VietSacBackend.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,6 +160,32 @@ namespace VietSacBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JwtId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isUsed = table.Column<bool>(type: "bit", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpireTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    LastUpdatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DeletedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRefreshToken_userEntities_User_Id",
+                        column: x => x.User_Id,
+                        principalTable: "userEntities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cart",
                 columns: table => new
                 {
@@ -229,12 +255,20 @@ namespace VietSacBackend.Migrations
                 name: "IX_userEntities_role_id",
                 table: "userEntities",
                 column: "role_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRefreshToken_User_Id",
+                table: "UserRefreshToken",
+                column: "User_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Cart");
+
+            migrationBuilder.DropTable(
+                name: "UserRefreshToken");
 
             migrationBuilder.DropTable(
                 name: "Order");

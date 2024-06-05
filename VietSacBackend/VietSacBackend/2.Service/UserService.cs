@@ -9,10 +9,10 @@ namespace VietSacBackend._2.Service
 {
     public class UserService : IUserService
     {
-        private readonly GenericRepository<UserEntity> _userRepository;
+        private readonly IGenericRepository<UserEntity> _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(GenericRepository<UserEntity> repository, IMapper mapper)
+        public UserService(IGenericRepository<UserEntity> repository, IMapper mapper)
         {
             _userRepository = repository;
             _mapper = mapper;

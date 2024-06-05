@@ -283,6 +283,48 @@ namespace VietSacBackend.Migrations
                     b.ToTable("userEntities");
                 });
 
+            modelBuilder.Entity("VietSacBackend._3.Repository.Data.UserRefreshToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DeletedTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTime>("ExpireTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("LastUpdatedTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("User_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isUsed")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("User_Id");
+
+                    b.ToTable("UserRefreshToken");
+                });
+
             modelBuilder.Entity("VietSacBackend._3.Repository.Data.CartEntity", b =>
                 {
                     b.HasOne("VietSacBackend._3.Repository.Data.OrderEntity", "Order")
@@ -351,6 +393,17 @@ namespace VietSacBackend.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("VietSacBackend._3.Repository.Data.UserRefreshToken", b =>
+                {
+                    b.HasOne("VietSacBackend._3.Repository.Data.UserEntity", "UserEntity")
+                        .WithMany()
+                        .HasForeignKey("User_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("VietSacBackend._3.Repository.Data.CategoryEntity", b =>

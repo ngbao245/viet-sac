@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -6,6 +8,7 @@ using System.Text;
 using VietSacBackend._3.Repository.BaseRepository;
 using VietSacBackend._3.Repository.Data;
 using VietSacBackend._4.Core.Model.Auth;
+
 
 namespace VietSacBackend._4.Core.Helper
 {
@@ -32,7 +35,7 @@ namespace VietSacBackend._4.Core.Helper
                     new Claim ("username", userEntity.userName),
                     new Claim (JwtRegisteredClaimNames.Email, userEntity.email),
                     new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim (ClaimTypes.Role, userEntity.Role.role_name),
+                    new Claim (ClaimTypes.Role, userEntity.Role.role_name.Trim()),
                     new Claim ("UserID", userEntity.Id),
                 }),
                 IssuedAt = DateTime.Now,
@@ -58,7 +61,6 @@ namespace VietSacBackend._4.Core.Helper
                 Token = accessToken,
                 RefreshToken = refreshToken,
             };
-
         }
 
         public string RefreshToken()
